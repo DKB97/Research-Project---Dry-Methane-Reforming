@@ -1,0 +1,164 @@
+description: |-
+  GRI-Mech Version 3.0 7/30/99  CHEMKIN-II format
+  See README30 file at anonymous FTP site unix.sri.com, directory gri;
+  WorldWideWeb home page http://www.me.berkeley.edu/gri_mech/ or
+  through http://www.gri.org , under 'Basic  Research',
+  for additional information, contacts, and disclaimer
+
+generator: ck2yaml
+input-files: [mech.inp, thermo.dat, trans.dat]
+cantera-version: 2.6.0
+date: Sun, 29 Jan 2023 12:33:20 +0100
+
+units: {length: m, time: s, quantity: kmol, activation-energy: J/kmol}
+# units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
+
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [O, H, C]
+  species: [H2, CO, CH4, H2O, CO2]
+  kinetics: gas
+  transport: mixture-averaged
+  state: {T: 300.0, P: 1 atm}
+
+species:
+- name: H2
+  composition: {H: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.34433112, 7.98052075e-03, -1.9478151e-05, 2.01572094e-08, -7.37611761e-12,
+      -917.935173, 0.683010238]
+    - [3.3372792, -4.94024731e-05, 4.99456778e-07, -1.79566394e-10, 2.00255376e-14,
+      -950.158922, -3.20502331]
+    note: |-
+      TPIS78
+       GRI-Mech Version 3.0 Thermodynamics released 7/30/99
+       NASA Polynomial format for CHEMKIN-II
+       see README file for disclaimer
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 38.0
+    diameter: 2.92
+    polarizability: 0.79
+    rotational-relaxation: 280.0
+- name: CO
+  composition: {C: 1, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [3.57953347, -6.1035368e-04, 1.01681433e-06, 9.07005884e-10, -9.04424499e-13,
+      -1.4344086e+04, 3.50840928]
+    - [2.71518561, 2.06252743e-03, -9.98825771e-07, 2.30053008e-10, -2.03647716e-14,
+      -1.41518724e+04, 7.81868772]
+    note: TPIS79
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 98.1
+    diameter: 3.65
+    polarizability: 1.95
+    rotational-relaxation: 1.8
+- name: CH4
+  composition: {C: 1, H: 4}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [5.14987613, -0.0136709788, 4.91800599e-05, -4.84743026e-08, 1.66693956e-11,
+      -1.02466476e+04, -4.64130376]
+    - [0.074851495, 0.0133909467, -5.73285809e-06, 1.22292535e-09, -1.0181523e-13,
+      -9468.34459, 18.437318]
+    note: L 8/88
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 141.4
+    diameter: 3.746
+    polarizability: 2.6
+    rotational-relaxation: 13.0
+- name: H2O
+  composition: {H: 2, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [4.19864056, -2.0364341e-03, 6.52040211e-06, -5.48797062e-09, 1.77197817e-12,
+      -3.02937267e+04, -0.849032208]
+    - [3.03399249, 2.17691804e-03, -1.64072518e-07, -9.7041987e-11, 1.68200992e-14,
+      -3.00042971e+04, 4.9667701]
+    note: L 8/89
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 572.4
+    diameter: 2.605
+    dipole: 1.844
+    rotational-relaxation: 4.0
+- name: CO2
+  composition: {C: 1, O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 3500.0]
+    data:
+    - [2.35677352, 8.98459677e-03, -7.12356269e-06, 2.45919022e-09, -1.43699548e-13,
+      -4.83719697e+04, 9.90105222]
+    - [3.85746029, 4.41437026e-03, -2.21481404e-06, 5.23490188e-10, -4.72084164e-14,
+      -4.8759166e+04, 2.27163806]
+    note: L 7/88
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 244.0
+    diameter: 3.763
+    polarizability: 2.65
+    rotational-relaxation: 2.1
+
+reactions:
+# - equation: CH4 + H2O => CO + 3 H2  # Reaction 1
+#   rate-constant: {A: 1.69e+03, b: 1.95, Ea: 128454540.0 }
+#   orders: {CH4: 1.6, H2O: 1.6}
+# - equation: CO + H2O => CO2 + H2  # Reaction 2
+#   rate-constant: {A: 4.13e+03, b: 0.48, Ea: 9018925.0}
+#   orders: {CO: 2.0, H2O: 2.0}
+
+
+
+
+
+
+- equation: 1 CH4 + 1 CO2 <=> 0 CH4 + 0 CO2 + 2 H2 + 2 CO # Reaction 1
+  rate-constant: {A: 1948.4e+04, b: 0, Ea: 13.0632e+07 } # data from fitting
+  negative-orders: true
+# - equation: CH4 + H2O => CO + 3 H2  # Reaction 1
+#   rate-constant: {A: 1.24e+01, b: 0.697, Ea: 78752423.0 } # data from fitting
+#   orders: {CH4: 0.623, H2O: 0.015}
+#   negative-orders: true
+# - equation: CO + H2O <=> CO2 + H2  # Reaction 2  less important, is not sensivite to this reaction. quasi-equilibrium
+#   rate-constant: {A: 4.13e+12, b: 0, Ea: 0}
+# - equation: CO + H2O <=> CO2 + H2  # Reaction 2  less important, is not sensivite to this reaction. quasi-equilibrium
+#   rate-constant: {A: 1.0e+12, b: 0, Ea: 1}
+
+# - equation: CH4 + H2O => CO + 3 H2  # Reaction 1
+#   rate-constant: {A: 1.68938002e+03, b: 1.950, Ea: 128454540.57662535 }
+#   orders: {CH4: 1.547, H2O: 1.643}
+# - equation: CO + H2O => CO2 + H2  # Reaction 2
+#   rate-constant: {A: 4.13491790e+03, b: 0.478, Ea: 9018925.482056558}
+#   orders: {CO: 2.376, H2O: 3.454}
+
+# [1.68938002e+03 1.94963982e+00 4.13491790e+03 4.77594054e-01
+#  1.54676773e+00 1.64286101e+00 2.37615067e+00 3.45376086e+00]
+
+# T = 800
+# def reactionspeed(A, b, Ea):
+#     from math import exp
+#     ra = A*T**b*exp(-Ea*4.184/8.314/T)
+#     return ra
+
+# reactionspeed(A=6.73e+09, b=1.95, Ea=30701.0)
+# reactionspeed(A=4.13e+12, b=0.48, Ea=2155.6)
+    
