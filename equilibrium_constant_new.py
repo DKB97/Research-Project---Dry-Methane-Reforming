@@ -66,17 +66,16 @@ eqconstant_smr=np.zeros(len(Temprange))
 for i, Temp in enumerate(Temprange):
     eqmix, _ = TGM.set_equilstate(eqmix, pres=Pres, temp=Temp)
     P=Pres
-    # eqconstantDRM[i]= ((((eqmix.xfr(co))/eqmix.xfr_g*Pres)**2) *((eqmix.xfr(h2)/eqmix.xfr_g*Pres)**2))/((eqmix.xfr(ch4)/eqmix.xfr_g*Pres)*(eqmix.xfr(co2)/eqmix.xfr_g*Pres))
+    
     eqconstantDRM[i] = np.exp(-(2*co.gort(Temp) + 2*h2.gort(Temp) - ch4.gort(Temp) - co2.gort(Temp)))
 
-    # eqconstant_methane_cracking[i] = ((eqmix.xfr(c)/eqmix.xfr_g*Pres)*(eqmix.xfr(h2)/eqmix.xfr_g*Pres)**2) / (eqmix.xfr(ch4)/eqmix.xfr_g*Pres)
+   
     eqconstant_methane_cracking[i]=np.exp( -(c_s.gort(Temp) + 2*h2.gort(Temp) - ch4.gort(Temp) ))
-    # eqconstant_boudouard[i] = ((eqmix.xfr(co)/eqmix.xfr_g*Pres)**2) / ((eqmix.xfr(co2)/eqmix.xfr_g*Pres)*(eqmix.xfr(c)/eqmix.xfr_g*Pres))
+    
     eqconstant_boudouard[i]= np.exp( -(c_s.gort(Temp) + co2.gort(Temp) - 2*co.gort(Temp) ))
-    # eqconstant_rcg[i] = ((eqmix.xfr(co)/eqmix.xfr_g*Pres)**2) / ((eqmix.xfr(co2)/eqmix.xfr_g*Pres)*(eqmix.xfr(c)/eqmix.xfr_g*Pres))
-    # eqconstant_rcg[i] = np.exp(-(2*co.gort(Temp) - co2.gort(Temp) - c_s.gort(Temp))) # other reaction, maybe also interesting
+   
     eqconstant_rcg[i] = np.exp(-(h2o.gort(Temp) + c_s.gort(Temp)- co.gort(Temp) - h2.gort(Temp)))
-    # eqconstant_rwgs[i] = ((eqmix.xfr(co)/eqmix.xfr_g*Pres)*(eqmix.xfr(h2o)/eqmix.xfr_g*Pres)) / ((eqmix.xfr(co2)/eqmix.xfr_g*Pres)*(eqmix.xfr(h2)/eqmix.xfr_g*Pres))
+   
     eqconstant_rwgs[i] = np.exp(-(co.gort(Temp) + h2o.gort(Temp) - co2.gort(Temp) - h2.gort(Temp)))
     eqconstant_smr[i] = np.exp(-(co.gort(Temp) + 3*h2.gort(Temp) - ch4.gort(Temp) - h2o.gort(Temp)))
 plt.figure(figsize=(10,5))
@@ -95,4 +94,3 @@ plt.xlim([800,1600])
 plt.savefig('C:/Users/Gebruiker/Documents/Research Project/Figures/eqconstantall.pdf', bbox_inches = 'tight')
 plt.show()
 
-# make a separate version for the presenation with chemical formulas instead of name
